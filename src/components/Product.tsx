@@ -15,17 +15,17 @@ const Product: React.FC<productProps> = ({product}) => {
 
     const addToCartHandler = () => {
         dispatch(cartActions.addToCart(product));
-    }
+    };
 
     const removeFromCartHandler = () => {
         dispatch(cartActions.removeFromCart(product));
-    }
+    };
 
     return (
         <Card className={"product"}>
             <CardMedia
                 component="img"
-                sx={{ width: 160 }}
+                sx={{width: 160}}
                 image={product.image}
                 alt={product.name}
             />
@@ -43,15 +43,15 @@ const Product: React.FC<productProps> = ({product}) => {
                 </CardContent>
                 <CardActions>
                     <IconButton onClick={addToCartHandler}>
-                        <Add />
+                        <Add/>
                     </IconButton>
                     <IconButton onClick={removeFromCartHandler}>
-                        <Remove />
+                        <Remove/>
                     </IconButton>
                 </CardActions>
             </Box>
         </Card>
     );
-}
+};
 
 export default Product;

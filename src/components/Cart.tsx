@@ -10,25 +10,22 @@ const Cart = () => {
 
     const dispatch = useDispatch();
     const cart: cartInterface = useSelector((state: RootState) => state.cartReducer.dict);
-    const totalCount = useSelector((state: RootState) => state.cartReducer.totalCount);
-    const totalPrice = useSelector((state: RootState) => state.cartReducer.totalPrice);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const dropDownHandler = () => {
         setOpen(!open);
-    }
+    };
 
     const deleteCartHandler = () => {
         dispatch(cartActions.deleteCart());
-    }
+    };
 
     return (
         <div className={"cart"}>
             <div className={"cart-header"}>
                 <ShoppingBag className={"mx-2"}/>
                 <div className={"flex flex-col mx-1"}>
-                    <Typography>Product Count: {totalCount}</Typography>
-                    <Typography>Total Price: {totalPrice}c</Typography>
+                    <Typography>Cart</Typography>
                 </div>
                 <div className={"grow"}/>
                 <ButtonGroup>
@@ -65,6 +62,6 @@ const Cart = () => {
             </Collapse>
         </div>
     );
-}
+};
 
 export default Cart;

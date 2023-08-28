@@ -1,9 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
 import cartInterface from "../interfaces/cart";
 import productInterface from "../interfaces/product";
 
-export interface cartStateInterface {
+interface cartStateInterface {
     dict: cartInterface;
     totalCount: number;
     totalPrice: number;

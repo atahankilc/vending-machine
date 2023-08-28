@@ -8,6 +8,6 @@ const VendingMachine = () => {
             <MachineController/>
         </div>
     )
-}
+};
 
 export default VendingMachine;

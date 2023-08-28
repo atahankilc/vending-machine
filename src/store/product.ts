@@ -1,8 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-
 import productInterface from "../interfaces/product";
 
-export interface productStateInterface {
+interface productStateInterface {
     list: productInterface[];
 }
 

@@ -12,8 +12,7 @@ const ProductShowcase = () => {
     const productList = useSelector((state: RootState) => state.productReducer.list);
     const [isLoading, setIsLoading] = useState(false);
 
-    // TODO
-    // use redux asyncThunk
+    // TODO: use redux asyncThunk
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -22,8 +21,8 @@ const ProductShowcase = () => {
             dispatch(productActions.changeProductList(data));
             setIsLoading(false);
         }
+
         fetchData();
-        console.log("fetching data");
     }, [dispatch]);
 
     return (
@@ -42,6 +41,6 @@ const ProductShowcase = () => {
             }
         </div>
     );
-}
+};
 
 export default ProductShowcase;
