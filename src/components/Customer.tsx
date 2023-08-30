@@ -6,6 +6,7 @@ import {userActions, userInformationInterface} from "../store/user";
 import {RootState} from "../store";
 import {useEffect} from "react";
 import axios from "axios";
+import {enqueueSnackbar} from "notistack";
 
 const Customer = () => {
 
@@ -14,12 +15,11 @@ const Customer = () => {
     const credential = useSelector((state: RootState) => state.userReducer.credential);
 
     const loginHandler = (credentialResponse: CredentialResponse) => {
-        console.log(credentialResponse)
         dispatch(userActions.loginUser(credentialResponse.credential));
     };
 
     const loginErrorHandler = () => {
-        console.log("error");
+        enqueueSnackbar('An Error Occurred!', { variant: "error" });
     }
 
     const logoutHandler = () => {
@@ -30,7 +30,9 @@ const Customer = () => {
         async function fetchData() {
             const response = await axios.get("http://localhost:8080/api/users/me",
                 {headers: {"Authorization": "Bearer " + credential}})
-                .catch((error) => {console.log(error);});
+                .catch((error) => {
+                    enqueueSnackbar(error, { variant: "error" });
+                });
             const userInformation: userInformationInterface = response!.data;
             dispatch(userActions.changeUserInformation(userInformation));
         }

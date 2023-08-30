@@ -5,6 +5,7 @@ import {AttachMoney, Done, ExpandLess, ExpandMore} from "@mui/icons-material";
 import {userActions} from "../store/user";
 import axios from "axios";
 import {RootState} from "../store";
+import {enqueueSnackbar} from "notistack";
 
 const CoinAcceptor = () => {
 
@@ -32,9 +33,12 @@ const CoinAcceptor = () => {
             const response = await axios.post("http://localhost:8080/api/users/insertCoin",
                 insertedCoin,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
-                .catch((error) => {console.log(error);});
+                .catch((error) => {
+                    enqueueSnackbar(error, {variant: "error"});
+                });
             if (response) {
                 dispatch(userActions.insertCoin(insertedCoin));
+                enqueueSnackbar("Coins Inserted Successfully", {variant: "success"})
             }
         }
 

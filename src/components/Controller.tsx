@@ -7,6 +7,7 @@ import {userActions} from "../store/user";
 import {RootState} from "../store";
 import {cartActions} from "../store/cart";
 import {productActions} from "../store/product";
+import {enqueueSnackbar} from "notistack";
 
 const Controller = () => {
 
@@ -20,18 +21,21 @@ const Controller = () => {
         Object.values(cartDict)
         async function fetchData() {
             const itemList = Object.values(cartDict);
-            console.log(itemList);
             const response = await axios.post("http://localhost:8080/api/checkout",
                 {itemList},
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
-                .catch((error) => {console.log(error);});
+                .catch((error) => {
+                    enqueueSnackbar(error, {variant: "error"});
+                });
             if (response) {
-                // TODO: add notification for returned items
                 const data = response!.data;
                 console.log(data);
                 dispatch(cartActions.deleteCart());
                 dispatch(userActions.setRemainingCoin(data.remainingCoin));
                 dispatch(productActions.requestFetch());
+                data.returnedProduct.itemList.forEach((product: any) => {
+                    enqueueSnackbar(product.name + " x" + product.count + " returned!", {variant: "info"});
+                })
             }
         }
 
@@ -42,9 +46,12 @@ const Controller = () => {
         async function fetchData() {
             const response = await axios.get("http://localhost:8080/api/users/refundCoin",
                 {headers: {"Authorization": "Bearer " + credential}})
-                .catch((error) => {console.log(error);});
+                .catch((error) => {
+                    enqueueSnackbar(error, {variant: "error"});
+                });
             if (response) {
                 dispatch(userActions.refundCoin());
+                enqueueSnackbar("Coins Refunded!", {variant: "success"});
             }
         }
 

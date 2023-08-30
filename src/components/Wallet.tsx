@@ -10,7 +10,7 @@ const Wallet = () => {
     const walletBalance = useSelector((state: RootState) => state.userReducer.userInformation!.wallet);
 
     const addMoneyHandler = () => {
-
+        // TODO: implement this
     }
 
     return (

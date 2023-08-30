@@ -6,6 +6,7 @@ import productInterface from "../interfaces/product";
 import {RootState} from "../store";
 import {productActions} from "../store/product";
 import axios from "axios";
+import {enqueueSnackbar} from "notistack";
 
 const ProductShowcase = () => {
 
@@ -21,9 +22,13 @@ const ProductShowcase = () => {
             setIsLoading(true);
             const response = await axios.get("http://localhost:8080/api/products",
                 {headers: {"Authorization": "Bearer " + credential}})
-                .catch((error) => {console.log(error);});
-            const productList: productInterface[] = response!.data;
-            dispatch(productActions.changeProductList(productList));
+                .catch((error) => {
+                    enqueueSnackbar(error, {variant: "error"});
+                });
+            if (response) {
+                const productList: productInterface[] = response!.data;
+                dispatch(productActions.changeProductList(productList));
+            }
             setIsLoading(false);
         }
 
