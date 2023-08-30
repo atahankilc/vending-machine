@@ -25,7 +25,7 @@ const Product: React.FC<productProps> = ({product}) => {
         <Card className={"product"}>
             <CardMedia
                 component="img"
-                sx={{width: 160}}
+                sx={{width: 160, minHeight: 200}}
                 image={product.image}
                 alt={product.name}
             />

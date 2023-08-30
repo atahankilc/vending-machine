@@ -24,9 +24,7 @@ const Cart = () => {
         <div className={"cart"}>
             <div className={"cart-header"}>
                 <ShoppingBag className={"mx-2"}/>
-                <div className={"flex flex-col mx-1"}>
-                    <Typography>Cart</Typography>
-                </div>
+                <Typography>Cart</Typography>
                 <div className={"grow"}/>
                 <ButtonGroup>
                     {Object.keys(cart).length > 0 &&
@@ -53,8 +51,8 @@ const Cart = () => {
                         return (
                             <div key={key} className={"cart-item"}>
                                 <Typography>{cartItem.name}</Typography>
-                                <Typography>Count: {cartItem.count}</Typography>
-                                <Typography>Price: {cartItem.price * cartItem.count}c</Typography>
+                                <Typography>{cartItem.count} Items</Typography>
+                                <Typography>{cartItem.price * cartItem.count}c</Typography>
                             </div>
                         )
                     })

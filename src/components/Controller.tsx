@@ -1,17 +1,70 @@
-import {useSelector} from "react-redux";
-import {RootState} from "../store";
-import {Typography} from "@mui/material";
 import React from "react";
+import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {IconButton, Typography} from "@mui/material";
+import {Close, Done} from "@mui/icons-material";
+import {userActions} from "../store/user";
+import {RootState} from "../store";
+import {cartActions} from "../store/cart";
+import {productActions} from "../store/product";
 
 const Controller = () => {
 
-    const insertedCoin = useSelector((state: RootState) => state.coinReducer.inserted);
+    const dispatch = useDispatch();
+    const credential = useSelector((state: RootState) => state.userReducer.credential);
+    const insertedCoin = useSelector((state: RootState) => state.userReducer.userInformation!.inserted);
+    const cartDict = useSelector((state: RootState) => state.cartReducer.dict);
     const totalPrice = useSelector((state: RootState) => state.cartReducer.totalPrice);
+
+    const completeRequestHandler = () => {
+        Object.values(cartDict)
+        async function fetchData() {
+            const itemList = Object.values(cartDict);
+            console.log(itemList);
+            const response = await axios.post("http://localhost:8080/api/checkout",
+                {itemList},
+                {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
+                .catch((error) => {console.log(error);});
+            if (response) {
+                // TODO: add notification for returned items
+                const data = response!.data;
+                console.log(data);
+                dispatch(cartActions.deleteCart());
+                dispatch(userActions.setRemainingCoin(data.remainingCoin));
+                dispatch(productActions.requestFetch());
+            }
+        }
+
+        fetchData();
+    }
+
+    const cancelRequestHandler = () => {
+        async function fetchData() {
+            const response = await axios.get("http://localhost:8080/api/users/refundCoin",
+                {headers: {"Authorization": "Bearer " + credential}})
+                .catch((error) => {console.log(error);});
+            if (response) {
+                dispatch(userActions.refundCoin());
+            }
+        }
+
+        fetchData();
+    }
 
     return (
         <div className={"controller"}>
-            <Typography>Inserted Coin: {insertedCoin}</Typography>
-            <Typography>Total Price: {totalPrice}</Typography>
+            <div className={"py-2"}>
+                <Typography className={"label"}>{insertedCoin}c Inserted</Typography>
+                <Typography className={"label"}>{totalPrice}c Estimated Cost</Typography>
+            </div>
+            <div className={"button-wrapper bg-white"}>
+                <IconButton onClick={completeRequestHandler}>
+                    <Done/>
+                </IconButton>
+                <IconButton onClick={cancelRequestHandler}>
+                    <Close/>
+                </IconButton>
+            </div>
         </div>
     );
 };

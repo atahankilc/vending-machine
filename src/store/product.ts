@@ -2,25 +2,25 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import productInterface from "../interfaces/product";
 
 interface productStateInterface {
-    list: productInterface[];
+    list: productInterface[],
+    requestFetch: boolean
 }
 
 const initialState: productStateInterface = {
-    list: []
+    list: [],
+    requestFetch: false
 }
 
 const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-        addProduct: (state, action: PayloadAction<productInterface>) => {
-            state.list.unshift(action.payload);
-        },
-        removeProduct: (state, action: PayloadAction<productInterface>) => {
-            state.list = state.list.filter((product) => product.id !== action.payload.id)
-        },
         changeProductList: (state, action: PayloadAction<productInterface[]>) => {
+            state.requestFetch = false;
             state.list = action.payload;
+        },
+        requestFetch: (state) => {
+            state.requestFetch = true;
         }
     }
 })

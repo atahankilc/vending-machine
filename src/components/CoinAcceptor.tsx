@@ -1,12 +1,15 @@
 import React, {useRef} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {ButtonGroup, Collapse, IconButton, TextField, Typography} from "@mui/material";
 import {AttachMoney, Done, ExpandLess, ExpandMore} from "@mui/icons-material";
-import {coinActions} from "../store/coin";
+import {userActions} from "../store/user";
+import axios from "axios";
+import {RootState} from "../store";
 
 const CoinAcceptor = () => {
 
     const dispatch = useDispatch();
+    const credential = useSelector((state: RootState) => state.userReducer.credential);
     const [open, setOpen] = React.useState(true);
     const coin1Ref = useRef<HTMLInputElement>();
     const coin5Ref = useRef<HTMLInputElement>();
@@ -18,19 +21,31 @@ const CoinAcceptor = () => {
     };
 
     const insertCoinHandler = () => {
-        let total = 0;
-        total += isNaN(parseInt(coin1Ref.current!.value)) ? 0 : parseInt(coin1Ref.current!.value);
-        total += isNaN(parseInt(coin5Ref.current!.value)) ? 0 : parseInt(coin5Ref.current!.value) * 5;
-        total += isNaN(parseInt(coin10Ref.current!.value)) ? 0 : parseInt(coin10Ref.current!.value) * 10;
-        total += isNaN(parseInt(coin20Ref.current!.value)) ? 0 : parseInt(coin20Ref.current!.value) * 20;
-        dispatch(coinActions.insertCoin(total));
+        let insertedCoin = 0;
+        insertedCoin += isNaN(parseInt(coin1Ref.current!.value)) ? 0 : parseInt(coin1Ref.current!.value);
+        insertedCoin += isNaN(parseInt(coin5Ref.current!.value)) ? 0 : parseInt(coin5Ref.current!.value) * 5;
+        insertedCoin += isNaN(parseInt(coin10Ref.current!.value)) ? 0 : parseInt(coin10Ref.current!.value) * 10;
+        insertedCoin += isNaN(parseInt(coin20Ref.current!.value)) ? 0 : parseInt(coin20Ref.current!.value) * 20;
+
+        // TODO: thunk
+        async function fetchData() {
+            const response = await axios.post("http://localhost:8080/api/users/insertCoin",
+                insertedCoin,
+                {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
+                .catch((error) => {console.log(error);});
+            if (response) {
+                dispatch(userActions.insertCoin(insertedCoin));
+            }
+        }
+
+        fetchData();
     };
 
     return (
         <div className={"coin-acceptor"}>
             <div className={"coin-acceptor-header"}>
-                <AttachMoney className={"mx-1"}/>
-                <Typography className={"mx-2"}>Coin Acceptor</Typography>
+                <AttachMoney className={"mx-2"}/>
+                <Typography>Coin Acceptor</Typography>
                 <div className={"grow"}/>
                 <ButtonGroup>
                     {!open &&

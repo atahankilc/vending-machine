@@ -54,16 +54,34 @@ body {
     @apply h-screen;
 }
 
+.customer {
+    @apply flex flex-row;
+    @apply bg-grey;
+    @apply items-center;
+    @apply h-16 w-[1000px];
+    @apply mt-5 p-2;
+    @apply text-white;
+}
+
+.wallet {
+    @apply flex flex-row;
+    @apply items-center;
+    @apply w-36 h-full;
+    @apply px-2;
+    @apply bg-purple;
+}
+
 .vending-machine {
     @apply h-full w-[1000px];
+    @apply my-5;
     @apply flex flex-row;
 }
 
 .product-showcase {
     @apply flex flex-col;
     @apply items-center;
-    @apply w-2/3;
-    @apply my-10 p-2;
+    @apply grow;
+    @apply p-2;
     @apply bg-white;
     @apply shadow-2xl;
     @apply overflow-auto no-scrollbar;
@@ -78,7 +96,6 @@ body {
 .machine-controller {
     @apply flex flex-col;
     @apply w-1/3;
-    @apply my-10;
     @apply bg-grey;
 }
 
@@ -136,7 +153,26 @@ body {
 
 .controller {
     @apply flex flex-col;
-    @apply  mb-2 mx-2;
-    @apply bg-white;
-    @apply shadow-2xl;
+    @apply mb-2 mx-2;
+    @apply text-white;
+    @apply border-2;
+}
+
+.label {
+    @apply flex flex-row;
+    @apply items-center;
+    @apply justify-center;
+    @apply p-1;
+}
+
+.button-wrapper {
+    @apply h-full;
+    @apply flex flex-row;
+    @apply items-center;
+    @apply justify-end;
+    @apply px-2;
+}
+
+.button-text {
+    @apply text-white;
 }
