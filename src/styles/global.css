@@ -58,7 +58,7 @@ body {
     @apply flex flex-row;
     @apply bg-grey;
     @apply items-center;
-    @apply h-16 w-[1000px];
+    @apply h-20 w-[1000px];
     @apply mt-5 p-2;
     @apply text-white;
 }
@@ -66,8 +66,8 @@ body {
 .wallet {
     @apply flex flex-row;
     @apply items-center;
-    @apply w-36 h-full;
-    @apply px-2;
+    @apply min-w-[130px] max-w-[300px] h-full;
+    @apply pl-2;
     @apply bg-purple;
 }
 

@@ -38,6 +38,10 @@ const Controller = () => {
             }
         }
 
+        if (totalPrice === 0) {
+            enqueueSnackbar("What Product?", {variant: "error"});
+            return;
+        }
         fetchData();
     }
 
