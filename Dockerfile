@@ -14,6 +14,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-ENV REACT_APP_GOOGLE_CLIENT_ID ""
-
 CMD ["serve", "-s", "build"]

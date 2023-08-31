@@ -8,7 +8,7 @@ import {SnackbarProvider} from "notistack";
 
 function App() {
     return (
-        <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}>
+        <GoogleOAuthProvider clientId={"626539819723-4ufbirra1u0qgo2v3njfk71uv87lg9uf.apps.googleusercontent.com"}>
             <SnackbarProvider maxSnack={5}>
                 <Provider store={store}>
                     <div className={"application"}>
