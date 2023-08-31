@@ -21,9 +21,9 @@ const Wallet = () => {
     }
 
     const addMoneyHandler = () => {
-        // TODO: mockup service?
+        // TODO: mockup service? loading indicator?
         async function fetchData() {
-            const response = await axios.put("http://localhost:8080/api/user/addMoney",
+            const response = await axios.put("https://vending-machine-backend-6ov3.onrender.com/api/user/addMoney",
                 moneyAmount,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {

@@ -20,7 +20,7 @@ const Controller = () => {
     const completeRequestHandler = () => {
         async function fetchData() {
             const itemList = Object.values(cartDict);
-            const response = await axios.post("http://localhost:8080/api/checkout",
+            const response = await axios.post("https://vending-machine-backend-6ov3.onrender.com/api/checkout",
                 {itemList},
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
@@ -47,7 +47,7 @@ const Controller = () => {
 
     const cancelRequestHandler = () => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/user/refundCoin",
+            const response = await axios.get("https://vending-machine-backend-6ov3.onrender.com/api/user/refundCoin",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});

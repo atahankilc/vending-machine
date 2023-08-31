@@ -25,7 +25,7 @@ const SupplierPanel = () => {
     // TODO: encryption?
     const enterToSupplierModeHandler = () => {
         async function fetchData() {
-            const response = await axios.put("http://localhost:8080/api/supplier/authenticate",
+            const response = await axios.put("https://vending-machine-backend-6ov3.onrender.com/api/supplier/authenticate",
                 supplierCode,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
@@ -50,7 +50,7 @@ const SupplierPanel = () => {
 
     const addProductHandler = () => {
         async function fetchData() {
-            const response = await axios.post("http://localhost:8080/api/product/add",
+            const response = await axios.post("https://vending-machine-backend-6ov3.onrender.com/api/product/add",
                 newProduct,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
@@ -61,7 +61,7 @@ const SupplierPanel = () => {
             }
         }
 
-        if (newProduct.name == "" || newProduct.price == 0 || newProduct.quantity == 0 || newProduct.image == "") {
+        if (newProduct.name === "" || newProduct.price === 0 || newProduct.quantity === 0 || newProduct.image === "") {
             enqueueSnackbar("There Should Be No Unfilled Fields!", {variant: "error"});
             return;
         }
@@ -74,7 +74,7 @@ const SupplierPanel = () => {
 
     const removeProductHandler = () => {
         async function fetchData() {
-            const response = await axios.delete(`http://localhost:8080/api/product/remove/${removeProductName}`,
+            const response = await axios.delete(`https://vending-machine-backend-6ov3.onrender.com/api/product/remove/${removeProductName}`,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
@@ -84,7 +84,7 @@ const SupplierPanel = () => {
             }
         }
 
-        if (removeProductName == "") {
+        if (removeProductName === "") {
             enqueueSnackbar("There Should Be No Unfilled Fields!", {variant: "error"});
             return;
         }
@@ -93,7 +93,7 @@ const SupplierPanel = () => {
 
     const collectMoneyHandler = () => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/supplier/collect",
+            const response = await axios.get("https://vending-machine-backend-6ov3.onrender.com/api/supplier/collect",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});

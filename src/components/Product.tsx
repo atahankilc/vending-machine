@@ -40,7 +40,7 @@ const Product: React.FC<productProps> = ({product}) => {
 
     useEffect(() => {
         async function fetchData() {
-            if (newProductPrice === product.price && newProductQuantity == product.quantity) {
+            if (newProductPrice === product.price && newProductQuantity === product.quantity) {
                 return;
             }
             const newProduct: productInterface = {
@@ -49,7 +49,7 @@ const Product: React.FC<productProps> = ({product}) => {
                 quantity: newProductQuantity,
                 image: product.image
             }
-            const response = await axios.put("http://localhost:8080/api/product/update",
+            const response = await axios.put("https://vending-machine-backend-6ov3.onrender.com/api/product/update",
                 newProduct,
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {

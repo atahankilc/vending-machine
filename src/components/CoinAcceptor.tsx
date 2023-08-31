@@ -23,7 +23,7 @@ const CoinAcceptor = () => {
 
     const insertCoinHandler = () => {
         async function fetchData(insertedCoin: number) {
-            const response = await axios.put("http://localhost:8080/api/user/insertCoin",
+            const response = await axios.put("https://vending-machine-backend-6ov3.onrender.com/api/user/insertCoin",
                 insertedCoin,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {

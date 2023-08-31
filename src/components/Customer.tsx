@@ -29,7 +29,7 @@ const Customer = () => {
     // TODO: loading spinner? login inside component?
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/user/me",
+            const response = await axios.get("https://vending-machine-backend-6ov3.onrender.com/api/user/me",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, { variant: "error" });

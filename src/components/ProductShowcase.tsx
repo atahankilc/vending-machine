@@ -24,7 +24,7 @@ const ProductShowcase = () => {
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-            const response = await axios.get("http://localhost:8080/api/product/getAll")
+            const response = await axios.get("https://vending-machine-backend-6ov3.onrender.com/api/product/getAll")
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
                 });
