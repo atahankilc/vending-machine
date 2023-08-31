@@ -18,7 +18,6 @@ const Controller = () => {
     const totalPrice = useSelector((state: RootState) => state.cartReducer.totalPrice);
 
     const completeRequestHandler = () => {
-        Object.values(cartDict)
         async function fetchData() {
             const itemList = Object.values(cartDict);
             const response = await axios.post("http://localhost:8080/api/checkout",
@@ -29,13 +28,12 @@ const Controller = () => {
                 });
             if (response) {
                 const data = response!.data;
-                console.log(data);
-                // TODO: all coins  must be returned!
                 dispatch(cartActions.deleteCart());
-                dispatch(userActions.setRemainingCoin(data.remainingCoin));
+                dispatch(userActions.returnCoin(data.returnedCoin));
                 dispatch(productActions.requestFetch());
+                enqueueSnackbar(data.returnedCoin + "c Returned!", {variant: "info"});
                 data.returnedProduct.itemList.forEach((product: any) => {
-                    enqueueSnackbar(product.name + " x" + product.count + " returned!", {variant: "info"});
+                    enqueueSnackbar(product.name + " x" + product.count + " Returned!", {variant: "info"});
                 })
             }
         }
@@ -45,13 +43,13 @@ const Controller = () => {
 
     const cancelRequestHandler = () => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/users/refundCoin",
+            const response = await axios.get("http://localhost:8080/api/user/refundCoin",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
                 });
             if (response) {
-                dispatch(userActions.refundCoin());
+                dispatch(userActions.changeUserInformation(response!.data));
                 enqueueSnackbar("Coins Refunded!", {variant: "success"});
             }
         }

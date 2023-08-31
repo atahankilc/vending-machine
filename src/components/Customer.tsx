@@ -26,9 +26,10 @@ const Customer = () => {
         dispatch(userActions.logoutUser());
     }
 
+    // TODO: loading spinner? login inside component?
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/users/me",
+            const response = await axios.get("http://localhost:8080/api/user/me",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, { variant: "error" });

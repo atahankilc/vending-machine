@@ -25,7 +25,6 @@ const userSlice = createSlice({
     reducers: {
         loginUser: (state, {payload}: PayloadAction<string | undefined>) => {
             if (payload === undefined) {
-                // TODO: Add notification
                 return state;
             }
             state.credential = payload;
@@ -37,20 +36,8 @@ const userSlice = createSlice({
         changeUserInformation: (state, action: PayloadAction<userInformationInterface>) => {
             state.userInformation = action.payload;
         },
-        insertCoin: (state, action: PayloadAction<number>) => {
-            if (state.userInformation!.wallet >= action.payload) {
-                state.userInformation!.wallet -= action.payload;
-                state.userInformation!.inserted += action.payload;
-            } else {
-                // TODO: Add notification
-                return state;
-            }
-        },
-        setRemainingCoin: (state, action: PayloadAction<number>) => {
-            state.userInformation!.inserted = action.payload;
-        },
-        refundCoin: (state) => {
-            state.userInformation!.wallet += state.userInformation!.inserted;
+        returnCoin: (state, action: PayloadAction<number>) => {
+            state.userInformation!.wallet = state.userInformation!.wallet + action.payload;
             state.userInformation!.inserted = 0;
         },
         enterToSupplierMode: (state) => {

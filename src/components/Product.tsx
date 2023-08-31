@@ -44,14 +44,12 @@ const Product: React.FC<productProps> = ({product}) => {
                 return;
             }
             const newProduct: productInterface = {
-                id: product.id,
                 name: product.name,
                 price: newProductPrice,
                 quantity: newProductQuantity,
                 image: product.image
             }
-            console.log(newProduct);
-            const response = await axios.post("http://localhost:8080/api/products/update",
+            const response = await axios.put("http://localhost:8080/api/product/update",
                 newProduct,
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
@@ -59,8 +57,8 @@ const Product: React.FC<productProps> = ({product}) => {
                 });
             if (response) {
                 const updatedProduct = response!.data;
+                enqueueSnackbar(`Product ${updatedProduct.name} Updated!`, {variant: "success"});
                 dispatch(productActions.updateProduct(updatedProduct));
-                enqueueSnackbar("Product Updated!", {variant: "success"});
             }
         }
 
@@ -95,7 +93,7 @@ const Product: React.FC<productProps> = ({product}) => {
                     }
                 </CardContent>
                 <CardActions>
-                    {!isSupplier &&
+                    {!isSupplier && credential &&
                         <>
                             <IconButton onClick={addToCartHandler}>
                                 <Add/>

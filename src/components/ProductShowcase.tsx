@@ -13,15 +13,13 @@ const ProductShowcase = () => {
     const dispatch = useDispatch();
     const productList = useSelector((state: RootState) => state.productReducer.list);
     const requestFetch = useSelector((state: RootState) => state.productReducer.requestFetch);
-    const credential = useSelector((state: RootState) => state.userReducer.credential);
     const [isLoading, setIsLoading] = useState(false);
 
-    // TODO: use redux asyncThunk
+    // TODO: use redux asyncThunk? error message?
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
-            const response = await axios.get("http://localhost:8080/api/products",
-                {headers: {"Authorization": "Bearer " + credential}})
+            const response = await axios.get("http://localhost:8080/api/product/getAll")
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
                 });
@@ -32,18 +30,18 @@ const ProductShowcase = () => {
             setIsLoading(false);
         }
 
-        if (credential || requestFetch) {
+        if (requestFetch) {
             fetchData();
         }
-    }, [credential, requestFetch, dispatch]);
+    }, [requestFetch, dispatch]);
 
     return (
         <div className={`product-showcase ${isLoading && "justify-center"}`}>
             {!isLoading && <Grid container>
                 {productList.map((product: productInterface, index) => {
                     return (
-                        <Grid item xs={credential ? 6 : 4} key={index}>
-                            <Product product={product} key={product.id}/>
+                        <Grid item xs={6} key={index}>
+                            <Product product={product} key={product.name}/>
                         </Grid>
                     )
                 })}

@@ -9,7 +9,7 @@ interface productStateInterface {
 
 const initialState: productStateInterface = {
     list: [],
-    requestFetch: false,
+    requestFetch: true,
     updateProductFlag: false
 }
 
@@ -26,7 +26,7 @@ const productSlice = createSlice({
         },
         updateProduct: (state, action: PayloadAction<productInterface>) => {
             state.list = state.list.map((product) => {
-                if (product.id === action.payload.id) {
+                if (product.name === action.payload.name) {
                     return action.payload;
                 } else {
                     return product;

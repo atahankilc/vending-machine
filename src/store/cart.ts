@@ -19,12 +19,12 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action: PayloadAction<productInterface>) => {
-            if (state.dict[action.payload.id]) {
-                state.dict[action.payload.id].count++;
+            if (state.dict[action.payload.name]) {
+                state.dict[action.payload.name].count++;
                 state.totalPrice += action.payload.price;
                 state.totalCount++;
             } else {
-                state.dict[action.payload.id] = {
+                state.dict[action.payload.name] = {
                     name: action.payload.name,
                     price: action.payload.price,
                     count: 1
@@ -34,14 +34,14 @@ const cartSlice = createSlice({
             }
         },
         removeFromCart: (state, action: PayloadAction<productInterface>) => {
-            if (state.dict[action.payload.id] === undefined) {
+            if (state.dict[action.payload.name] === undefined) {
                 return;
-            } else if (state.dict[action.payload.id].count > 1) {
-                state.dict[action.payload.id].count--;
+            } else if (state.dict[action.payload.name].count > 1) {
+                state.dict[action.payload.name].count--;
                 state.totalPrice -= action.payload.price;
                 state.totalCount--;
             } else {
-                delete state.dict[action.payload.id];
+                delete state.dict[action.payload.name];
                 state.totalPrice -= action.payload.price;
                 state.totalCount--;
             }

@@ -5,7 +5,7 @@ interface CartItemInterface {
 }
 
 interface cartInterface {
-    [productId: string]: CartItemInterface
+    [productName: string]: CartItemInterface
 }
 
 export default cartInterface;

@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ButtonGroup, Collapse, IconButton, TextField, Typography} from "@mui/material";
 import {AttachMoney, Done, ExpandLess, ExpandMore} from "@mui/icons-material";
-import {userActions} from "../store/user";
+import {userActions, userInformationInterface} from "../store/user";
 import axios from "axios";
 import {RootState} from "../store";
 import {enqueueSnackbar} from "notistack";
@@ -22,27 +22,36 @@ const CoinAcceptor = () => {
     };
 
     const insertCoinHandler = () => {
-        let insertedCoin = 0;
-        insertedCoin += isNaN(parseInt(coin1Ref.current!.value)) ? 0 : parseInt(coin1Ref.current!.value);
-        insertedCoin += isNaN(parseInt(coin5Ref.current!.value)) ? 0 : parseInt(coin5Ref.current!.value) * 5;
-        insertedCoin += isNaN(parseInt(coin10Ref.current!.value)) ? 0 : parseInt(coin10Ref.current!.value) * 10;
-        insertedCoin += isNaN(parseInt(coin20Ref.current!.value)) ? 0 : parseInt(coin20Ref.current!.value) * 20;
-
-        // TODO: thunk
-        async function fetchData() {
-            const response = await axios.post("http://localhost:8080/api/users/insertCoin",
+        async function fetchData(insertedCoin: number) {
+            const response = await axios.put("http://localhost:8080/api/user/insertCoin",
                 insertedCoin,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
                 });
             if (response) {
-                dispatch(userActions.insertCoin(insertedCoin));
+                const userInformation: userInformationInterface = response!.data;
+                dispatch(userActions.changeUserInformation(userInformation));
                 enqueueSnackbar("Coins Inserted Successfully", {variant: "success"})
+                coin1Ref.current!.value = "";
+                coin5Ref.current!.value = "";
+                coin10Ref.current!.value = "";
+                coin20Ref.current!.value = "";
             }
         }
 
-        fetchData();
+
+        let insertedCoin = 0;
+        insertedCoin += isNaN(parseInt(coin1Ref.current!.value)) ? 0 : parseInt(coin1Ref.current!.value);
+        insertedCoin += isNaN(parseInt(coin5Ref.current!.value)) ? 0 : parseInt(coin5Ref.current!.value) * 5;
+        insertedCoin += isNaN(parseInt(coin10Ref.current!.value)) ? 0 : parseInt(coin10Ref.current!.value) * 10;
+        insertedCoin += isNaN(parseInt(coin20Ref.current!.value)) ? 0 : parseInt(coin20Ref.current!.value) * 20;
+
+        if(insertedCoin === 0) {
+            enqueueSnackbar("What Coin?", {variant: "error"});
+            return;
+        }
+        fetchData(insertedCoin);
     };
 
     return (

@@ -7,6 +7,7 @@ import {RootState} from "../store";
 import {userActions} from "../store/user";
 import {Done} from "@mui/icons-material";
 import React from "react";
+import productInterface from "../interfaces/product";
 
 const SupplierPanel = () => {
 
@@ -14,7 +15,7 @@ const SupplierPanel = () => {
     const credential = useSelector((state: RootState) => state.userReducer.credential);
     const isSupplier = useSelector((state: RootState) => state.userReducer.isSupplier);
     const [supplierCode, setSupplierCode] = React.useState("");
-    const [newProduct, setNewProduct] = React.useState({name: "", price: 0, quantity: 0, image: ""});
+    const [newProduct, setNewProduct] = React.useState<productInterface>({name: "", price: 0, quantity: 0, image: ""});
     const [removeProductName, setRemoveProductName] = React.useState("");
 
     const supplierCodeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -24,7 +25,7 @@ const SupplierPanel = () => {
     // TODO: encryption?
     const enterToSupplierModeHandler = () => {
         async function fetchData() {
-            const response = await axios.post("http://localhost:8080/api/users/supplierMode",
+            const response = await axios.put("http://localhost:8080/api/supplier/authenticate",
                 supplierCode,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
@@ -49,7 +50,7 @@ const SupplierPanel = () => {
 
     const addProductHandler = () => {
         async function fetchData() {
-            const response = await axios.post("http://localhost:8080/api/products/add",
+            const response = await axios.post("http://localhost:8080/api/product/add",
                 newProduct,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
@@ -73,7 +74,7 @@ const SupplierPanel = () => {
 
     const removeProductHandler = () => {
         async function fetchData() {
-            const response = await axios.delete(`http://localhost:8080/api/products/remove/${removeProductName}`,
+            const response = await axios.delete(`http://localhost:8080/api/product/remove/${removeProductName}`,
                 {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
@@ -92,14 +93,14 @@ const SupplierPanel = () => {
 
     const collectMoneyHandler = () => {
         async function fetchData() {
-            const response = await axios.get("http://localhost:8080/api/checkout/collect",
+            const response = await axios.get("http://localhost:8080/api/supplier/collect",
                 {headers: {"Authorization": "Bearer " + credential}})
                 .catch((error) => {
                     enqueueSnackbar(error, {variant: "error"});
                 });
             if (response) {
                 const collectedCoin = response!.data;
-                enqueueSnackbar(`${collectedCoin}c Retrieved!`, {variant: "success"});
+                enqueueSnackbar(`${collectedCoin}c Collected!`, {variant: "success"});
             }
         }
 

@@ -8,17 +8,23 @@ import {RootState} from "../store";
 const SidePanel = () => {
 
     const isSupplier = useSelector((state: RootState) => state.userReducer.isSupplier);
+    const userInformation = useSelector((state: RootState) => state.userReducer.userInformation);
 
     return (
         <div className={"side-panel"}>
-            {!isSupplier &&
+
+            {userInformation &&
                 <>
-                    <CoinAcceptor/>
-                    <Cart/>
-                    <Controller/>
+                    {!isSupplier &&
+                        <>
+                            <CoinAcceptor/>
+                            <Cart/>
+                            <Controller/>
+                        </>
+                    }
+                    <SupplierPanel/>
                 </>
             }
-            <SupplierPanel/>
         </div>
     );
 };
