@@ -9,4 +9,6 @@ RUN npm install
 
 COPY . .
 
+ENV REACT_APP_GOOGLE_CLIENT_ID ""
+
 CMD npm start
