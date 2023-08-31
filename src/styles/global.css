@@ -80,7 +80,7 @@ body {
 .product-showcase {
     @apply flex flex-col;
     @apply items-center;
-    @apply grow;
+    @apply w-2/3;
     @apply p-2;
     @apply bg-white;
     @apply shadow-2xl;
@@ -93,7 +93,7 @@ body {
     @apply m-2;
 }
 
-.machine-controller {
+.side-panel {
     @apply flex flex-col;
     @apply w-1/3;
     @apply bg-grey;
@@ -156,6 +156,19 @@ body {
     @apply mb-2 mx-2;
     @apply text-white;
     @apply border-2;
+}
+
+.lock {
+    @apply flex flex-row;
+    @apply mb-2 mx-2 p-1;
+    @apply items-center;
+    @apply bg-white;
+    @apply text-white;
+}
+
+.supplier-panel {
+    @apply flex flex-col;
+    @apply mb-2 mx-2;
 }
 
 .label {

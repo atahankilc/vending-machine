@@ -4,17 +4,19 @@ export interface userInformationInterface {
     name: string,
     picture: string,
     wallet: number,
-    inserted: number,
+    inserted: number
 }
 
 interface userStateInterface {
     userInformation: userInformationInterface | undefined,
-    credential: string | undefined
+    credential: string | undefined,
+    isSupplier: boolean
 }
 
 const initialState: userStateInterface = {
     userInformation: undefined,
-    credential: undefined
+    credential: undefined,
+    isSupplier: false
 }
 
 const userSlice = createSlice({
@@ -50,6 +52,12 @@ const userSlice = createSlice({
         refundCoin: (state) => {
             state.userInformation!.wallet += state.userInformation!.inserted;
             state.userInformation!.inserted = 0;
+        },
+        enterToSupplierMode: (state) => {
+            state.isSupplier = true;
+        },
+        exitFromSupplierMode: (state) => {
+            state.isSupplier = false;
         }
     }
 })

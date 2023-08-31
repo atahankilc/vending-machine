@@ -1,5 +1,5 @@
 import ProductShowcase from "../components/ProductShowcase";
-import MachineController from "../components/MachineController";
+import SidePanel from "../components/SidePanel";
 import {useSelector} from "react-redux";
 import {RootState} from "../store";
 
@@ -9,9 +9,11 @@ const VendingMachine = () => {
 
     return (
         <div className={"vending-machine"}>
-            <ProductShowcase/>
             {userInformation &&
-                <MachineController/>
+                <>
+                <ProductShowcase/>
+                <SidePanel/>
+                </>
             }
         </div>
     )

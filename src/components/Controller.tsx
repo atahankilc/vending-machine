@@ -30,6 +30,7 @@ const Controller = () => {
             if (response) {
                 const data = response!.data;
                 console.log(data);
+                // TODO: all coins  must be returned!
                 dispatch(cartActions.deleteCart());
                 dispatch(userActions.setRemainingCoin(data.remainingCoin));
                 dispatch(productActions.requestFetch());
@@ -55,6 +56,10 @@ const Controller = () => {
             }
         }
 
+        if (insertedCoin === 0) {
+            enqueueSnackbar("What Coin?", {variant: "error"});
+            return;
+        }
         fetchData();
     }
 
