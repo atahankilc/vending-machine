@@ -15,6 +15,7 @@ const SupplierPanel = () => {
     const isSupplier = useSelector((state: RootState) => state.userReducer.isSupplier);
     const [supplierCode, setSupplierCode] = React.useState("");
     const [newProduct, setNewProduct] = React.useState({name: "", price: 0, quantity: 0, image: ""});
+    const [removeProductName, setRemoveProductName] = React.useState("");
 
     const supplierCodeHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setSupplierCode(e.target.value);
@@ -66,6 +67,29 @@ const SupplierPanel = () => {
         fetchData();
     }
 
+    const changeRemoveProductHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setRemoveProductName(e.target.value);
+    }
+
+    const removeProductHandler = () => {
+        async function fetchData() {
+            const response = await axios.delete(`http://localhost:8080/api/products/remove/${removeProductName}`,
+                {headers: {"Authorization": "Bearer " + credential, "Content-Type": "application/json"}})
+                .catch((error) => {
+                    enqueueSnackbar(error, {variant: "error"});
+                });
+            if (response) {
+                dispatch(productActions.requestFetch());
+            }
+        }
+
+        if (removeProductName == "") {
+            enqueueSnackbar("There Should Be No Unfilled Fields!", {variant: "error"});
+            return;
+        }
+        fetchData();
+    }
+
     const collectMoneyHandler = () => {
         async function fetchData() {
             const response = await axios.get("http://localhost:8080/api/checkout/collect",
@@ -89,6 +113,7 @@ const SupplierPanel = () => {
     const exitFromSupplierModeHandler = () => {
         setSupplierCode("");
         setNewProduct({name: "", price: 0, quantity: 0, image: ""});
+        setRemoveProductName("");
         dispatch(userActions.exitFromSupplierMode());
     }
 
@@ -152,6 +177,17 @@ const SupplierPanel = () => {
                             onChange={changeNewProductHandler}
                         />
                         <Button onClick={addProductHandler}> Add Product </Button>
+                    </div>
+                    <div className={"flex flex-col border bg-white my-2"}>
+                        <TextField
+                            id="name"
+                            label={`Name`}
+                            type="string"
+                            variant="standard"
+                            sx={{margin: "0px 5px"}}
+                            onChange={changeRemoveProductHandler}
+                        />
+                        <Button onClick={removeProductHandler}> Remove Product </Button>
                     </div>
                     <Button onClick={collectMoneyHandler}> Collect Money </Button>
                     <Button onClick={requestProductUpdateHandler}> Apply Product Changes </Button>
