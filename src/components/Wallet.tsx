@@ -38,6 +38,10 @@ const Wallet = () => {
             }
         }
         if (isAddMoney) {
+            if (moneyAmount === 0) {
+                enqueueSnackbar("What Money?", {variant: "error"})
+                return;
+            }
             fetchData();
         } else {
             setIsAddMoney(true);

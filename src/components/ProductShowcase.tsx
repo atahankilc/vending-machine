@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress, Grid} from "@mui/material";
+import {CircularProgress, Grid, IconButton} from "@mui/material";
 import Product from "./Product";
 import productInterface from "../interfaces/product";
 import {RootState} from "../store";
 import {productActions} from "../store/product";
 import axios from "axios";
 import {enqueueSnackbar} from "notistack";
+import {Replay} from "@mui/icons-material";
 
 const ProductShowcase = () => {
 
@@ -14,6 +15,10 @@ const ProductShowcase = () => {
     const productList = useSelector((state: RootState) => state.productReducer.list);
     const requestFetch = useSelector((state: RootState) => state.productReducer.requestFetch);
     const [isLoading, setIsLoading] = useState(false);
+
+    const reloadHandler = () => {
+        dispatch(productActions.requestFetch());
+    }
 
     // TODO: use redux asyncThunk? error message?
     useEffect(() => {
@@ -48,6 +53,14 @@ const ProductShowcase = () => {
             </Grid>}
             {isLoading &&
                 <CircularProgress/>
+            }
+            {!isLoading &&
+                <>
+                    <div className={"grow"}/>
+                        <IconButton onClick={reloadHandler}>
+                            <Replay/>
+                        </IconButton>
+                </>
             }
         </div>
     );
