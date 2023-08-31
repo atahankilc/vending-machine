@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN npm install -g serve
 
-COPY package.json /frontend
+COPY package.json /app
 
 RUN npm install
 
