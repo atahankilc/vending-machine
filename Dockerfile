@@ -1,6 +1,6 @@
 FROM node:19-alpine
 
-WORKDIR /frontend
+WORKDIR /app
 
 RUN npm install -g serve
 
@@ -8,7 +8,7 @@ COPY package.json /frontend
 
 RUN npm install
 
-COPY . /frontend
+COPY . /app
 
 RUN npm run build
 
