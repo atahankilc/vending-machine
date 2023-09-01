@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# Vending Machine Frontend Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+deployed on render -> https://vending-machine-frontend.onrender.com/
 
-## Available Scripts
+Not: Since I use free version of render, sometimes it can stay unresponsive for a long time, or it gives a direct error. As far as I can see, it allocates resources according to the number of incoming requests, and so it reduces the resources if there is no request for a long time. Page refreshing mostly solves the problem.
 
-In the project directory, you can run:
+## Page And Component Structure
 
-### `npm start`
+- [App](./src/App.tsx)
+  - [Customer](./src/components/Customer.tsx)
+    - [Wallet](./src/components/Wallet.tsx)
+  - [VendingMachine](./src/pages/VendingMachine.tsx)
+    - [ProductShowcase](./src/components/ProductShowcase.tsx)
+      - [Product](./src/components/Product.tsx)
+    - [SidePanel](./src/components/SidePanel.tsx)
+      - [CoinAcceptor](./src/components/CoinAcceptor.tsx)
+      - [Cart](./src/components/Cart.tsx)
+      - [Controller](./src/components/Controller.tsx)
+      - [SupplierPanel](./src/components/SupplierPanel.tsx)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Used Libraries and Frameworks
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [React](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Material-UI](https://material-ui.com/)
+- [Redux](https://redux.js.org/)
+- [Oauth2-Google](https://www.npmjs.com/package/@react-oauth/google)
+- [Axios](https://axios-http.com/)
+- [Notistack](https://notistack.com/)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Supplier Code -> 10
+    
